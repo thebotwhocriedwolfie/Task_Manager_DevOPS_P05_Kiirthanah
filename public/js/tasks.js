@@ -1,4 +1,4 @@
-function addResource() {
+function addTask() {
     var response = "";
     var jsonData = new Object();
     jsonData.name = document.getElementById("name").value;
@@ -14,14 +14,15 @@ function addResource() {
     }
 
     var request = new XMLHttpRequest();
-    request.open("POST", "/add-resource", true);
+    request.open("POST", "/addTasks", true); // Updated endpoint here
     request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
-        response = JSON.parse(request.responseText);
-        console.log(response);
+        if (request.status >= 200 && request.status < 300) {
+            response = JSON.parse(request.responseText);
+            console.log(response);
 
-        if (response.message === undefined) {
-            document.getElementById("message").innerHTML = 'Added Resource: ' + jsonData.name + '!';
+            // Display success message
+            document.getElementById("message").innerHTML = 'Added Task: ' + jsonData.name + '!';
             document.getElementById("message").setAttribute("class", "text-success");
             
             // Clear input fields
@@ -30,10 +31,11 @@ function addResource() {
             document.getElementById("description").value = "";
             document.getElementById("end_time").value = "";
             
-            // Redirect to main page after addition
-            window.location.href = 'index.html';
+            // Optionally redirect to main page after addition
+            // window.location.href = 'index.html'; // Uncomment if needed
         } else {
-            document.getElementById("message").innerHTML = 'Unable to add resource!';
+            // Handle error response
+            document.getElementById("message").innerHTML = 'Unable to add task! Status: ' + request.status;
             document.getElementById("message").setAttribute("class", "text-danger");
         }
     };

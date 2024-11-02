@@ -7,7 +7,7 @@ async function readJSON(filename) {
         return JSON.parse(data);
     } catch (err) {
         console.error(err);
-        throw err;
+        throw err; // Propagate error to the caller
     }
 }
 
@@ -19,17 +19,17 @@ async function writeJSON(object, filename) {
         return allObjects;
     } catch (err) {
         console.error(err);
-        throw err;
+        throw err; // Propagate error to the caller
     }
 }
 
-async function addTask(req, res) { // Ensure function is named addTask
+async function addTask(req, res) {
     try {
         const { name, description, start_time, end_time, owner } = req.body;
 
         // Input validation
-        if (!owner.includes('@') || !owner.includes('.') || description.length < 6) {
-            return res.status(400).json({ message: 'Validation error' });
+        if (!owner || !owner.includes('@') || !owner.includes('.') || description.length < 6) {
+            return res.status(400).json({ message: 'Validation error: Ensure the owner is a valid email and description is at least 6 characters.' });
         }
 
         // Create a new task
@@ -38,6 +38,7 @@ async function addTask(req, res) { // Ensure function is named addTask
 
         return res.status(201).json(updatedTasks);
     } catch (error) {
+        console.error(error); // Log error for debugging
         return res.status(500).json({ message: error.message });
     }
 }
