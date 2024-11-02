@@ -23,7 +23,7 @@ async function writeJSON(object, filename) {
     }
 }
 
-async function addResource(req, res) {
+async function addTask(req, res) { // Changed function name from addResource to addTask
     try {
         const { name, description, start_time, end_time, owner } = req.body;
 
@@ -33,10 +33,10 @@ async function addResource(req, res) {
         }
 
         // Create a new task
-        const newResource = new Tasks(name, description, start_time, end_time);
-        const updatedResources = await writeJSON(newResource, 'utils/tasks.json');
-        
-        return res.status(201).json(updatedResources);
+        const newTask = new Tasks(name, description, start_time, end_time); // Changed variable name from newResource to newTask
+        const updatedTasks = await writeJSON(newTask, 'utils/tasks.json'); // Changed filename reference to tasks.json
+
+        return res.status(201).json(updatedTasks);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -45,5 +45,5 @@ async function addResource(req, res) {
 module.exports = {
     readJSON,
     writeJSON,
-    addResource
+    addTask // Changed export from addResource to addTask
 };
