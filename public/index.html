@@ -17,8 +17,7 @@
             <img src="images/logo.png" alt="Logo">
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-10">
-            </div>
+            <div class="col-md-10"></div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal">
                     Add Task
@@ -67,21 +66,49 @@
     </div>
 
     <script>
-        function addTask() {
+        async function addTask() {
             const name = document.getElementById('name').value;
             const description = document.getElementById('description').value;
             const start_time = document.getElementById('start_time').value;
             const end_time = document.getElementById('end_time').value;
 
-            // Create a new Task instance
-            const task = new Tasks(name, description, start_time, end_time);
+            // Create a new task object
+            const task = {
+                name: name,
+                description: description,
+                start_time: start_time,
+                end_time: end_time
+            };
 
-            // Handle task storage (e.g., save to an array, send to a server, etc.)
-            console.log(task); // For now, just log the task to the console
+            try {
+                const response = await fetch('/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(task)
+                });
 
-            // Clear the form
-            document.getElementById('taskForm').reset();
-            $('#taskModal').modal('hide'); // Close the modal
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                console.log(result); // Optionally handle success response
+                // Optionally show a success message
+                document.getElementById('message').innerText = 'Task added successfully!';
+                document.getElementById('message').classList.add('text-success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                // Optionally show an error message
+                document.getElementById('message').innerText = 'Error adding task.';
+                document.getElementById('message').classList.add('text-danger');
+            } finally {
+                // Clear the form and close the modal
+                document.getElementById('taskForm').reset();
+                $('#taskModal').modal('hide');
+            }
         }
     </script>
 </body>
