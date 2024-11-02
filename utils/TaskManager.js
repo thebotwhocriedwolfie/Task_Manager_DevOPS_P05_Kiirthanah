@@ -1,4 +1,3 @@
-const { Tasks } = require('../models/Tasks'); // Corrected import
 const fs = require('fs').promises;
 
 async function readJSON(filename) {
@@ -7,7 +6,7 @@ async function readJSON(filename) {
         return JSON.parse(data);
     } catch (err) {
         console.error(err);
-        throw err; // Propagate error to the caller
+        throw err;
     }
 }
 
@@ -19,7 +18,7 @@ async function writeJSON(object, filename) {
         return allObjects;
     } catch (err) {
         console.error(err);
-        throw err; // Propagate error to the caller
+        throw err;
     }
 }
 
@@ -28,17 +27,23 @@ async function addTask(req, res) {
         const { name, description, start_time, end_time, owner } = req.body;
 
         // Input validation
-        if (!owner || !owner.includes('@') || !owner.includes('.') || description.length < 6) {
-            return res.status(400).json({ message: 'Validation error: Ensure the owner is a valid email and description is at least 6 characters.' });
+        if (!owner.includes('@') || !owner.includes('.') || description.length < 6) {
+            return res.status(400).json({ message: 'Validation error' });
         }
 
-        // Create a new task
-        const newTask = new Tasks(name, description, start_time, end_time, owner); // Include owner
+        // Create a new task object
+        const newTask = {
+            name,
+            description,
+            start_time,
+            end_time,
+            id: new Date().getTime() + "" + Math.floor(Math.random() * 1000).toString().padStart(3, '0') // Generating a new ID
+        };
+
         const updatedTasks = await writeJSON(newTask, './utils/tasks.json'); // Ensure correct path
 
         return res.status(201).json(updatedTasks);
     } catch (error) {
-        console.error(error); // Log error for debugging
         return res.status(500).json({ message: error.message });
     }
 }
