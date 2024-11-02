@@ -5,7 +5,7 @@ function addTask() {
     jsonData.start_time = document.getElementById("start_time").value;
     jsonData.description = document.getElementById("description").value;
     jsonData.end_time = document.getElementById("end_time").value;
-    jsonData.owner = document.getElementById("owner").value; // Assuming you have an owner field in your form
+    jsonData.owner = document.getElementById("owner").value; // Ensure this field exists in your HTML
 
     // Check if essential fields are provided
     if (jsonData.name === "" || jsonData.description === "" || jsonData.start_time === "" || jsonData.end_time === "" || jsonData.owner === "") {
@@ -15,7 +15,7 @@ function addTask() {
     }
 
     var request = new XMLHttpRequest();
-    request.open("POST", "/tasks", true); // Ensure the endpoint matches your server's endpoint
+    request.open("POST", "/addTasks", true); // Updated endpoint here
     request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
         if (request.status >= 200 && request.status < 300) {
@@ -25,7 +25,7 @@ function addTask() {
             // Display success message
             document.getElementById("message").innerHTML = 'Added Task: ' + jsonData.name + '!';
             document.getElementById("message").setAttribute("class", "text-success");
-
+            
             // Clear input fields
             document.getElementById("name").value = "";
             document.getElementById("start_time").value = "";
@@ -41,7 +41,7 @@ function addTask() {
             document.getElementById("message").setAttribute("class", "text-danger");
         }
     };
-
+    
     // Send request with data in JSON format
     request.send(JSON.stringify(jsonData));
 }
