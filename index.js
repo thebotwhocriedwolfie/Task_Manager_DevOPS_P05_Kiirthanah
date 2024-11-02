@@ -9,8 +9,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-const { addTasks } = require('./utils/TaskManager'); // Corrected import
-app.post('/tasks', addTasks); // Add the route to handle task creation
+const { addTask } = require('./utils/TaskManager'); // Corrected import to match function name
+app.post('/tasks', addTask); // Add the route to handle task creation
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/" + startPage);

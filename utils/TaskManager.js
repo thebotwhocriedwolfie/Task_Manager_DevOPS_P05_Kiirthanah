@@ -23,7 +23,7 @@ async function writeJSON(object, filename) {
     }
 }
 
-async function addTask(req, res) { // Changed function name from addResource to addTask
+async function addTask(req, res) { // Ensure function is named addTask
     try {
         const { name, description, start_time, end_time, owner } = req.body;
 
@@ -33,8 +33,8 @@ async function addTask(req, res) { // Changed function name from addResource to 
         }
 
         // Create a new task
-        const newTask = new Tasks(name, description, start_time, end_time); // Changed variable name from newResource to newTask
-        const updatedTasks = await writeJSON(newTask, 'utils/tasks.json'); // Changed filename reference to tasks.json
+        const newTask = new Tasks(name, description, start_time, end_time, owner); // Include owner
+        const updatedTasks = await writeJSON(newTask, './utils/tasks.json'); // Ensure correct path
 
         return res.status(201).json(updatedTasks);
     } catch (error) {
@@ -45,5 +45,5 @@ async function addTask(req, res) { // Changed function name from addResource to 
 module.exports = {
     readJSON,
     writeJSON,
-    addTask // Changed export from addResource to addTask
+    addTask // Ensure this matches the import in index.js
 };
