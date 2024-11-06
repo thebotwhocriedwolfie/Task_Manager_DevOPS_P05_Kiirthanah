@@ -9,6 +9,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
+const { addCategory, viewCategories } = require('./utils/Categories')
+app.post('/add-category', addCategory);
+app.get('/view-categories', viewCategories);
+
 const { addTask } = require('./utils/TaskManager'); // Corrected import to match function name
 app.post('/tasks', addTask); // Add the route to handle task creation
 
@@ -21,5 +25,4 @@ server = app.listen(PORT, function () {
     const baseUrl = `http://${address.address == "::" ? 'localhost' : address.address}:${address.port}`;
     console.log(`Demo project at: ${baseUrl}`);
 });
-
 module.exports = { app, server };
