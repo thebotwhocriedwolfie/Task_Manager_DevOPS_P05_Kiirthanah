@@ -1,19 +1,15 @@
-var express = require('express');
-var bodyParser = require("body-parser");
-var app = express();
-const PORT = process.env.PORT || 5050
-var startPage = "index.html";
+const express = require('express');
+const path = require('path');
+const app = express();
+const indexRoutes = require('./index');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static("./public"));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/" + startPage);
-})
-server = app.listen(PORT, function () {
-    const address = server.address();
-    const baseUrl = `http://${address.address == "::" ? 'localhost' : address.address}:${address.port}`;
-    console.log(`Demo project at: ${baseUrl}`);
+// Use the routes defined in index.js
+app.use('/', indexRoutes);
+
+const PORT = process.env.PORT || 5050;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
-module.exports = {app, server}

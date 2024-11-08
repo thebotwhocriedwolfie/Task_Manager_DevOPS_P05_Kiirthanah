@@ -1,47 +1,37 @@
-function addTask() {
-    var response = "";
-    var jsonData = new Object();
-    jsonData.name = document.getElementById("name").value;
-    jsonData.start_time = document.getElementById("start_time").value;
-    jsonData.description = document.getElementById("description").value;
-    jsonData.end_time = document.getElementById("end_time").value;
-    jsonData.owner = document.getElementById("owner").value; // Ensure this field exists in your HTML
+async function addTask() {
+    const jsonData = {
+        name: document.getElementById("name").value,
+        description: document.getElementById("description").value,
+        start_time: document.getElementById("start_time").value,
+        end_time: document.getElementById("end_time").value,
+        owner: document.getElementById("owner").value // Make sure there's an "owner" field in the HTML form
+    };
 
-    // Check if essential fields are provided
-    if (jsonData.name === "" || jsonData.description === "" || jsonData.start_time === "" || jsonData.end_time === "" || jsonData.owner === "") {
+    if (!jsonData.name || !jsonData.description || !jsonData.start_time || !jsonData.end_time || !jsonData.owner) {
         document.getElementById("message").innerHTML = 'All fields are required!';
         document.getElementById("message").setAttribute("class", "text-danger");
         return;
     }
 
-    var request = new XMLHttpRequest();
-    request.open("POST", "/addTasks", true); // Updated endpoint here
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.onload = function () {
-        if (request.status >= 200 && request.status < 300) {
-            response = JSON.parse(request.responseText);
-            console.log(response);
+    try {
+        const response = await fetch('/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
 
-            // Display success message
-            document.getElementById("message").innerHTML = 'Added Task: ' + jsonData.name + '!';
+        if (response.ok) {
+            document.getElementById("message").innerHTML = `Added Task: ${jsonData.name}!`;
             document.getElementById("message").setAttribute("class", "text-success");
-            
-            // Clear input fields
-            document.getElementById("name").value = "";
-            document.getElementById("start_time").value = "";
-            document.getElementById("description").value = "";
-            document.getElementById("end_time").value = "";
-            document.getElementById("owner").value = ""; // Clear owner field
-            
-            // Optionally redirect to main page after addition
-            // window.location.href = 'index.html'; // Uncomment if needed
         } else {
-            // Handle error response
-            document.getElementById("message").innerHTML = 'Unable to add task! Status: ' + request.status;
+            document.getElementById("message").innerHTML = 'Failed to add task!';
             document.getElementById("message").setAttribute("class", "text-danger");
         }
-    };
-    
-    // Send request with data in JSON format
-    request.send(JSON.stringify(jsonData));
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById("message").innerHTML = 'An error occurred.';
+        document.getElementById("message").setAttribute("class", "text-danger");
+    }
 }
