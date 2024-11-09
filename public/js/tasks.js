@@ -3,11 +3,11 @@ async function addTask() {
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
         start_time: document.getElementById("start_time").value,
-        end_time: document.getElementById("end_time").value,
-        owner: document.getElementById("owner").value // Make sure there's an "owner" field in the HTML form
+        end_time: document.getElementById("end_time").value
     };
 
-    if (!jsonData.name || !jsonData.description || !jsonData.start_time || !jsonData.end_time || !jsonData.owner) {
+    // Check if all required fields are filled
+    if (!jsonData.name || !jsonData.description || !jsonData.start_time || !jsonData.end_time) {
         document.getElementById("message").innerHTML = 'All fields are required!';
         document.getElementById("message").setAttribute("class", "text-danger");
         return;
