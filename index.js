@@ -11,15 +11,16 @@ app.use(express.static("./public"));
 
 const { addCategory, viewCategories } = require('./utils/Categories')
 const { editTask, deleteTask } = require('./public/js/edit')
+const { addTask } = require('./utils/TaskManager')
+const { viewTask } = require('./utils/TaskDisplay')
 
 //API routes
 app.post('/add-category', addCategory);
 app.get('/view-categories', viewCategories);
 app.put('/tasks/:id', editTask);
 app.delete('/tasks/:id', deleteTask);
-
-const { addTask } = require('./utils/TaskManager'); // Corrected import to match function name
-app.post('/tasks', addTask); // Add the route to handle task creation
+app.get('/view-tasks', viewTask);
+app.post('/tasks', addTask);
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/" + startPage);
