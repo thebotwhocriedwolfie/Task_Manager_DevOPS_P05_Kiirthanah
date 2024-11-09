@@ -30,7 +30,7 @@ function loadTasks() {
           "<td>" +
           '<button type="button" class="btn btn-warning" onclick="editTask(\'' +
           JSON.stringify(response[i]).replaceAll('"', "&quot;") +
-          "')\">Edit </button> " +
+          "')\">Edit</button> " +
           '<button type="button" class="btn btn-danger" onclick="deleteTask(' +
           response[i].id +
           ')"> Delete</button>' +
