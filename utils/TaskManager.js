@@ -26,4 +26,30 @@ async function writeJSON(task) {
     }
 }
 
-module.exports = { readJSON, writeJSON };
+
+async function addTasks(req, res) {
+    const { name, description, category, start_time, end_time } = req.body;
+
+    if (!name || !description || !category || !start_time || !end_time) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const newTask = new Tasks(name, description, category, start_time, end_time);
+    try {
+        const updatedTasks = await writeJSON(newTask);
+        res.status(201).json(updatedTasks);
+    } catch (error) {
+        console.error("Error adding task:", error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
+module.exports = { readJSON, writeJSON, addTasks };
+
+
+
+
+
+
+
+

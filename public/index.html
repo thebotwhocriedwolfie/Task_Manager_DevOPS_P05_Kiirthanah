@@ -3,35 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DVOPS - Task Management Web App</title>
+    <title>Add Task</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/tasks.js"></script>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <img src="images/logo.png" alt="Logo">
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-10"></div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal">
-                    Add Task
-                </button>
-            </div>
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <!-- Modal for Adding Task -->
-    <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <!-- Add Task script -->
+    <script src="./js/addTasks.js"></script>  
+</head>
+<body onload="loadCategories(); loadTasks()">
+
+    <!-- Add Task button -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskModal">
+        Add Task
+    </button>
+
+    <!-- Modal for Add Task -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Add New Task</h5>
+                    <h5 class="modal-title" id="addTaskModalLabel">Add New Task</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -40,76 +35,40 @@
                     <form id="taskForm">
                         <div class="form-group">
                             <label for="name">Task Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter task name" required>
+                            <input type="text" class="form-control" id="name" placeholder="Enter Task name">
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <input type="text" class="form-control" id="description" placeholder="Enter task description" required>
+                            <input type="text" class="form-control" id="description" placeholder="Enter short description">
+                        </div>
+                        <div>
+                            <select id="categoryDropdown" class="form-control">
+                                <option value="">--Select a Category--</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="start_time">Start Time</label>
-                            <input type="datetime-local" class="form-control" id="start_time" required>
+                            <input type="datetime-local" class="form-control" id="start_time">
                         </div>
                         <div class="form-group">
                             <label for="end_time">End Time</label>
-                            <input type="datetime-local" class="form-control" id="end_time" required>
+                            <input type="datetime-local" class="form-control" id="end_time">
                         </div>
-                        <p align="right" id="message" class=""></p>
+                        <div class="form-group">
+                            <label for="timestamp">Timestamp</label>
+                            <input type="datetime-local" class="form-control" id="timestamp">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addTask()">Add New Task</button>
+                    <button type="button" class="btn btn-primary" onclick="addTask()">Add Task</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        async function addTask() {
-            const name = document.getElementById('name').value;
-            const description = document.getElementById('description').value;
-            const start_time = document.getElementById('start_time').value;
-            const end_time = document.getElementById('end_time').value;
-
-            // Create a new task object
-            const task = {
-                name: name,
-                description: description,
-                start_time: start_time,
-                end_time: end_time
-            };
-
-            try {
-                const response = await fetch('/tasks', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(task)
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const result = await response.json();
-                console.log(result); // Optionally handle success response
-                // Optionally show a success message
-                document.getElementById('message').innerText = 'Task added successfully!';
-                document.getElementById('message').classList.add('text-success');
-
-            } catch (error) {
-                console.error('Error:', error);
-                // Optionally show an error message
-                document.getElementById('message').innerText = 'Error adding task.';
-                document.getElementById('message').classList.add('text-danger');
-            } finally {
-                // Clear the form and close the modal
-                document.getElementById('taskForm').reset();
-                $('#taskModal').modal('hide');
-            }
-        }
-    </script>
 </body>
 </html>
+
+

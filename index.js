@@ -1,34 +1,34 @@
-const express = require('express');
-const router = express.Router();
-const { writeJSON, readJSON } = require('./utils/TaskManager');
-const Tasks = require('./models/Tasks');
+var express = require('express');
+var bodyParser = require("body-parser");
+var cors = require('cors');
+var app = express();
 
-router.post('/tasks', async (req, res) => {
-    try {
-        const { name, description, start_time, end_time, owner } = req.body;
+const PORT = process.env.PORT || 5050;
+var startPage = "index.html";
 
-        // Validate data
-        if (!name || !description || !start_time || !end_time || !owner) {
-            return res.status(400).json({ message: 'All fields are required' });
-        }
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static("./public"));
 
-        const newTask = new Tasks(name, description, start_time, end_time, owner);
-        const updatedTasks = await writeJSON(newTask);
-        res.status(201).json(updatedTasks);
-    } catch (error) {
-        console.error("Error creating task:", error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+const { addCategory, viewCategories } = require('./utils/Categories')
+const { addTasks } = require('./utils/TaskManager')
+
+
+//API routes
+app.post('/add-category', addCategory);
+app.get('/view-categories', viewCategories);
+app.post('/add-tasks', addTasks);
+
+
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + "/public/" + startPage);
 });
 
-router.get('/tasks', async (req, res) => {
-    try {
-        const tasks = await readJSON();
-        res.status(200).json(tasks);
-    } catch (error) {
-        console.error("Error fetching tasks:", error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+server = app.listen(PORT, function () {
+    const address = server.address();
+    const baseUrl = `http://${address.address == "::" ? 'localhost' : address.address}:${address.port}`;
+    console.log(`Demo project at: ${baseUrl}`);
 });
-
-module.exports = router;
+module.exports = { app, server };
