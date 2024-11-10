@@ -6,6 +6,8 @@ function loadCategoryDropdown() {
   request.onload = function () {
       var categories = JSON.parse(request.responseText);
       var optionsHtml = '';
+      // Clear the current options before adding new ones
+      document.getElementById('categoryDropdownBox').innerHTML = '<option value="">All</option>';
 
       // Generate <option> elements for each category
       categories.forEach(category => {
@@ -13,7 +15,7 @@ function loadCategoryDropdown() {
       });
 
       // Insert the generated options into the categoryDropdown select element
-      document.getElementById('categoryDropdown').innerHTML += optionsHtml;
+      document.getElementById('categoryDropdownBox').innerHTML += optionsHtml;
   };
 
   request.send();
