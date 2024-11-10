@@ -28,9 +28,12 @@ function loadTasks() {
           response[i].end_time +
           "</td>" +
           "<td>" +
+<<<<<<< HEAD
           response[i].timestamp +
           "</td>" +
           "<td>" +
+=======
+>>>>>>> ee9d0433f5ff830c396184e076382036c47ce1ad
           '<button type="button" class="btn btn-warning" onclick="editTask(\'' +
           JSON.stringify(response[i]).replaceAll('"', "&quot;") +
           "')\">Edit</button> " +
