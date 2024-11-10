@@ -13,7 +13,7 @@
     "id": "2",
     "name": "Math Homework",
     "description": "Complete Q4 and 5 on Trigo Ws ",
-    "category": "none",
+    "category": "Test",
     "start_time": "10:00",
     "end_time": "12:00",
     "timestamp": "2024-11-05"
@@ -22,10 +22,9 @@
    "id": "3",
     "name": "Math Homework",
     "description": "Complete Q4 and 5 on Trigo Ws ",
-    "category": "none",
+    "category": "test2",
     "start_time": "10:00",
     "end_time": "12:00",
     "timestamp": "2024-11-05" 
   }
 ]
-
