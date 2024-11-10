@@ -9,16 +9,20 @@ var startPage = "index.html";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
-app.use(express.static("utils"));
+app.use(express.static('utils'));
 
 const { addCategory, viewCategories } = require('./utils/Categories')
+const { editTask, deleteTask } = require('./utils/edit')
+const { viewTask } = require('./utils/TaskDisplay')
 const { addTask } = require('./utils/TaskManager')
-
 
 //API routes
 app.post('/add-category', addCategory);
 app.get('/view-categories', viewCategories);
 app.post('/add-tasks', addTask);
+app.put('/tasks/:id', editTask);
+app.delete('/tasks/:id', deleteTask);
+app.get('/view-tasks', viewTask);
 
 
 
