@@ -24,11 +24,9 @@ async function addCategory(req, res) {
         const allCategories = await readJSON('utils/categories.json') // Read all categories
         let index = allCategories.findIndex(item => item.name === name); // Check if category already exists (index = -1 if not found)
         if (index !== -1) { // If category already exists
-            console.log
             return res.status(500).json({ message: 'Category already exists!' });
         }
         if (name == "") { // If name is empty
-            console.log(name);
             return res.status(500).json({ message: 'Enter the name of the category!' });
         }
         if (nameNoSpace == "") { // If name is empty
