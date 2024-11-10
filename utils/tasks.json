@@ -1,31 +1,29 @@
-
 [
   {
     "id": "1",
     "name": "Sleep",
-    "description": "Task 1...",
-    "category": "none",
+    "description": "Task 1 ",
+    "category": "Test",
     "start_time": "09:00",
     "end_time": "17:00",
-    "timestamp": "2024-11-05"
+    "timestamp": "2024-11-11"
   },
   {
     "id": "2",
     "name": "Math Homework",
-    "description": "Complete Q4 and 5 on Trigo Ws ",
-    "category": "none",
+    "description": "Complete Q4 and 5 on Trigo ",
+    "category": "Homework",
+    "start_time": "10:00",
+    "end_time": "12:00",
+    "timestamp": "2024-11-05"
+  },
+  {
+    "id": "5",
+    "name": "Math Test",
+    "description": "Revision for math test",
+    "category": "Test",
     "start_time": "10:00",
     "end_time": "12:00",
     "timestamp": "2024-11-05"
   }
-  {
-   "id": "3",
-    "name": "Math Homework",
-    "description": "Complete Q4 and 5 on Trigo Ws ",
-    "category": "none",
-    "start_time": "10:00",
-    "end_time": "12:00",
-    "timestamp": "2024-11-05" 
-  }
 ]
-

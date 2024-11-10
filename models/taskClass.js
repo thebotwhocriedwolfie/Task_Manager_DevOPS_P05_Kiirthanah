@@ -1,5 +1,6 @@
 class Task {
     constructor(name, description, category, start_time, end_time) {
+        this.id= id;
         this.name = name;
         this.description = description;
         this.category = category; 

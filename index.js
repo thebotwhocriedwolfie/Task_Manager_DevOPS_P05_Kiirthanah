@@ -8,15 +8,18 @@ var startPage = "index.html";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
+app.use(express.static('utils'));
 
 const { addCategory, viewCategories } = require('./utils/Categories')
-const { editTask, deleteTask } = require('./public/js/edit')
+const { editTask, deleteTask } = require('./utils/edit')
+const { viewTask } = require('./utils/taskDisplay')
 
 //API routes
 app.post('/add-category', addCategory);
 app.get('/view-categories', viewCategories);
 app.put('/tasks/:id', editTask);
 app.delete('/tasks/:id', deleteTask);
+app.get('/view-tasks', viewTask);
 
 const { addTask } = require('./utils/TaskManager'); // Corrected import to match function name
 app.post('/tasks', addTask); // Add the route to handle task creation
