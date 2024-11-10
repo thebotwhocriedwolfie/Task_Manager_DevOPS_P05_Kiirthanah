@@ -27,10 +27,10 @@ async function writeJSON(task) {
 }
 
 
-async function addTasks(req, res) {
-    const { name, description, category, start_time, end_time } = req.body;
+async function addTask(req, res) {
+    const { name, description, category, start_time, end_time, timestamp } = req.body;
 
-    if (!name || !description || !category || !start_time || !end_time) {
+    if (!name || !description || !category || !start_time || !end_time || !timestamp) {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -44,12 +44,7 @@ async function addTasks(req, res) {
     }
 }
 
-module.exports = { readJSON, writeJSON, addTasks };
-
-
-
-
-
+module.exports = { readJSON, writeJSON, addTask };
 
 
 

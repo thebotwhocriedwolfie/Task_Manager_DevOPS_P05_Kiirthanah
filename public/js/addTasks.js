@@ -10,11 +10,6 @@ async function loadCategories() {
 
         const dropdown = document.getElementById('categoryDropdown'); // Dropdown menu in HTML
 
-        // Static "Test" option
-        const testOption = document.createElement('option');
-        testOption.value = "Test";
-        testOption.textContent = "Test";
-        dropdown.appendChild(testOption);
 
         // Dynamically add options from categories JSON
         for (let i = 0; i < categories.length; i++) {
@@ -36,7 +31,7 @@ async function addTask() {
         category: document.getElementById("categoryDropdown").value,
         start_time: document.getElementById("start_time").value,
         end_time: document.getElementById("end_time").value,
-        timestamp: new Date().toISOString() // Current timestamp
+        timestamp: document.getElementById("timestamp").value
     };
 
     // Check for missing data
@@ -61,6 +56,7 @@ async function addTask() {
             document.getElementById("addMessage").innerHTML = `Added Task: ${jsonData.name}!`;
             document.getElementById("addMessage").setAttribute("class", "text-success");
             window.location.href = 'index.html'; // Redirect to main page
+            alert("Task added sucessfully");
         } else {
             document.getElementById("addMessage").innerHTML = 'Failed to add task!';
             document.getElementById("addMessage").setAttribute("class", "text-danger");
@@ -70,9 +66,10 @@ async function addTask() {
         document.getElementById("addMessage").innerHTML = 'An error occurred.';
         document.getElementById("addMessage").setAttribute("class", "text-danger");
     }
-}
+};
 
-// Load categories when the DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', function () {
-    loadCategories(); // Call the function to load categories on page load
-});
+request.onerror = function() {
+    console.error("Request encountered an error");
+    document.getElementById("addMessage").innerHTML = 'Network error!';
+    document.getElementById("addMessage").setAttribute("class", "text-danger");
+};
