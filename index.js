@@ -12,7 +12,6 @@ app.use(express.static('utils'));
 
 const { addCategory, viewCategories } = require('./utils/Categories')
 const { editTask, deleteTask } = require('./utils/edit')
-const { addTask } = require('./utils/TaskManager')
 const { viewTask } = require('./utils/TaskDisplay')
 
 //API routes

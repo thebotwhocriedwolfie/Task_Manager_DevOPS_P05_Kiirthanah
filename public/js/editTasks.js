@@ -145,52 +145,12 @@ function updateTask(id) {
 
 
 
-/*function updateTask(id){
-    console.log(id)
-    var response='';
-
-    var jsonData=new Object();
-    jsonData.name=document.getElementById('editName').value;
-    jsonData.description=document.getElementById('editDescription').value;
-    jsonData.category=document.getElementById('categoryDropdown').value;
-    jsonData.start_time=document.getElementById('editStart_time').value;
-    jsonData.end_time=document.getElementById('editEnd_time').value;
-    jsonData.timestamp=document.getElementById('editTimestamp').value;
-
-    //missing data field check
-    if( jsonData.name=='' || jsonData.description=='' ||jsonData.category==''|| jsonData.start_time==''||jsonData.end_time==''|| jsonData.timestamp==''){
-        document.getElementById('editMessage').innerhtml='All fields are required';
-        document.getElementById('editMessage').setAttribute('class','text-danger');
-        return
-    }
-    
-    const url = `/tasks/${id}`;
-
-    var request= new XMLHttpRequest();
-
-    request.open('PUT','/edit-task/'+id,true);
-    request.setRequestHeader('Content-Type','application/json');
-
-    request.onload=function(){
-        response=JSON.parse(request.responseText);
-
-        if (response.message=='Task modified successfully'){
-            document.getElementById("editMessage").innerHTML = 'Edited Resource: ' +jsonData.name + '!';
-            document.getElementById("editMessage").setAttribute("class","text-success");
-            window.location.href = 'index.html';
-        }else {
-            document.getElementById("editMessage").innerHTML = 'Unable to edit resource!';
-            document.getElementById("editMessage").setAttribute("class", "text-danger");
-        }
-        };
-        request.send(JSON.stringify(jsonData));
-    }*/
 
 //delete task
 function deleteTask(id) {
     var response = "";
     var request = new XMLHttpRequest();
-    request.open("DELETE", "/edit-task/" + id, true);
+    request.open("DELETE", "/tasks/" + id, true);
     request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
     response = JSON.parse(request.responseText);
@@ -215,36 +175,4 @@ function deleteTask(id) {
     });
     
 
-    /*const url = `/edit-task/${id}`;
     
-    var request = new XMLHttpRequest();
-    request.open('PUT', url, true);
-    request.setRequestHeader('Content-Type', 'application/json');
-
-    request.onload = function() {
-        try {
-            response = JSON.parse(request.responseText);
-
-            if (response.message === 'Task modified successfully') {
-                document.getElementById("editMessage").innerHTML = `Edited Resource: ${jsonData.name}!`;
-                document.getElementById("editMessage").setAttribute("class", "text-success");
-                window.location.href = 'index.html';
-            } else {
-                document.getElementById("editMessage").innerHTML = 'Unable to edit resource!';
-                document.getElementById("editMessage").setAttribute("class", "text-danger");
-            }
-        } catch (error) {
-            console.error("Error parsing response:", error);
-            document.getElementById("editMessage").innerHTML = 'Invalid response format!';
-            document.getElementById("editMessage").setAttribute("class", "text-danger");
-        }
-    };
-
-    request.onerror = function() {
-        console.error("Request encountered an error");
-        document.getElementById("editMessage").innerHTML = 'Network error!';
-        document.getElementById("editMessage").setAttribute("class", "text-danger");
-    };
-
-    request.send(JSON.stringify(jsonData));
-}*/
