@@ -12,6 +12,7 @@
     <script src="js/category.js"></script>
     <!--<script src="js/tasks.js"></script>-->
     <script src="js/view_tasks.js"></script>
+    <script src="js/addTasks.js"></script>
     <link rel="stylesheet" href="css/styles.css">
     <!--edit script-->
     <script src="./js/editTasks.js"></script>
@@ -24,7 +25,8 @@
             <div class="col-md-10">
             </div>
             <div class="col-md-2 button-container">
-                <button type="button" class="btn btn-primary contained-button" data-toggle="modal" data-target="#taskModal">
+                <!-- Add Task button -->
+                <button type="button" class="btn btn-primary contained-button" data-toggle="modal" data-target="#addTaskModal">
                     Add Task
                 </button>
                 <button type="button" class="btn btn-primary contained-button" data-toggle="modal" data-target="#categoryModal" onclick="viewCategories()">
@@ -62,11 +64,11 @@
     </div>
 
     <!-- Modal for Adding Category -->
-    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" arialabelledby="resourceModalLabel" aria-hidden="true">
+    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" arialabelledby="categoryModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="resourceModalLabel">Add New Resource</h5>
+                    <h5 class="modal-title" id="categoryModalLabel">Add New Category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -98,8 +100,55 @@
             </div>
         </div>
     </div>
-  
-    
+
+    <!-- Modal for Add Task -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTaskModalLabel">Add New Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="taskForm">
+                        <div id="addMessage"></div>
+                        <div class="form-group">
+                            <label for="name">Task Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter Task name">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Enter short description">
+                        </div>
+                        <div>
+                            <label for="categoryDropdown">Category</label>
+                            <select id="categoryDropdown" class="form-control">
+                                <option value="">--Select a Category--</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="start_time">Start Time</label>
+                            <input type="time" class="form-control" id="start_time">
+                        </div>
+                        <div class="form-group">
+                            <label for="end_time">End Time</label>
+                            <input type="time" class="form-control" id="end_time">
+                        </div>
+                        <div class="form-group">
+                            <label for="timestamp">Timestamp</label>
+                            <input type="date" class="form-control" id="timestamp">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addTask()">Add Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal for edit -->
     <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -153,8 +202,11 @@
             </div>
         </div>
     </div>
-    
 
+    <script src="index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
