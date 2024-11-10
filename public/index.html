@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <!--edit script-->
     <script src="./js/editTasks.js"></script>
-    <script src="./js/view_tasks.js"></script>
+    <script src="./js/viewTasks.js"></script>
 </head>
 <body onload="loadCategories(); loadTasks();">
     <div class="container mt-5">
@@ -176,8 +176,8 @@
                             <input type="text" class="form-control" id="editDescription" placeholder="Enter short description">
                         </div>
                         <div>
-                            <label for="categoryDropdown">category</label>
-                            <select id="categoryDropdown">
+                            <label for="editCategoryDropdown">Category</label>
+                            <select id="editCategoryDropdown" class="form-control">
                                 <option value="">none</option>
                             </select>
                         </div>
