@@ -34,7 +34,7 @@ async function addTask(req, res) {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const newTask = new Tasks(name, description, category, start_time, end_time);
+    const newTask = new Tasks(name, description, category, start_time, end_time, timestamp);
     try {
         const updatedTasks = await writeJSON(newTask);
         res.status(201).json(updatedTasks);
