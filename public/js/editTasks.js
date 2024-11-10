@@ -38,7 +38,7 @@ function editTask(data){
     document.getElementById("editTaskId").value = selectedTask.id;
     document.getElementById("editName").value= selectedTask.name;
     document.getElementById("editDescription").value= selectedTask.description;
-    document.getElementById('categoryDropdown').value=selectedTask.category;
+    document.getElementById('editCategoryDropdown').value=selectedTask.category;
     document.getElementById('editStart_time').value=selectedTask.start_time;
     document.getElementById('editEnd_time').value=selectedTask.end_time;
     document.getElementById('editTimestamp').value=selectedTask.timestamp;
@@ -54,7 +54,7 @@ function updateTask(id) {
     const jsonData = {
         name: document.getElementById('editName').value,
         description: document.getElementById('editDescription').value,
-        category: document.getElementById('categoryDropdown').value,
+        category: document.getElementById('editCategoryDropdown').value,
         start_time: document.getElementById('editStart_time').value,
         end_time: document.getElementById('editEnd_time').value,
         timestamp: document.getElementById('editTimestamp').value
