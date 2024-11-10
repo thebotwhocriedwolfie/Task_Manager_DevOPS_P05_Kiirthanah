@@ -32,7 +32,7 @@ async function editTask(req,res) {
         //load data from json file into allTasks array
         const allTasks= await readJSON('./utils/tasks.json');
 
-        var modified= false;//...
+        var modified= false;
 
         //iterate through array 
         for( var i=0; i< allTasks.length; i++){
