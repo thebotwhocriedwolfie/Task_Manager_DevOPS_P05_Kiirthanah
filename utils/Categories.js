@@ -20,12 +20,16 @@ async function writeJSON(object, filename) {
 async function addCategory(req, res) {
     try {
         const name = req.body.name;
+        const nameNoSpace = name.replace(/\s/g, ''); // Remove all spaces (\s is a regex for space and g is for global which means all spaces)
         const allCategories = await readJSON('utils/categories.json') // Read all categories
         let index = allCategories.findIndex(item => item.name === name); // Check if category already exists (index = -1 if not found)
         if (index !== -1) { // If category already exists
             return res.status(500).json({ message: 'Category already exists!' });
         }
-        if (name == "") {
+        if (nameNoSpace === "") { // If name is has only spaces
+            return res.status(500).json({ message: 'The name cannot only contain spaces!' });
+        }
+        if (name == "") { // If name is empty
             return res.status(500).json({ message: 'Enter the name of the category!' });
         }
         const newCategory = new Category(name);
