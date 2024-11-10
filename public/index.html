@@ -25,7 +25,8 @@
             <div class="col-md-10">
             </div>
             <div class="col-md-2 button-container">
-                <button type="button" class="btn btn-primary contained-button" data-toggle="modal" data-target="#taskModal">
+                <!-- Add Task button -->
+                <button type="button" class="btn btn-primary contained-button" data-toggle="modal" data-target="#addTaskModal">
                     Add Task
                 </button>
                 <button type="button" class="btn btn-primary contained-button" data-toggle="modal" data-target="#categoryModal" onclick="viewCategories()">
@@ -63,11 +64,11 @@
     </div>
 
     <!-- Modal for Adding Category -->
-    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" arialabelledby="resourceModalLabel" aria-hidden="true">
+    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" arialabelledby="categoryModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="resourceModalLabel">Add New Resource</h5>
+                    <h5 class="modal-title" id="categoryModalLabel">Add New Category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -99,11 +100,6 @@
             </div>
         </div>
     </div>
-  
-    <!-- Add Task button -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskModal">
-        Add Task
-    </button>
 
     <!-- Modal for Add Task -->
     <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
