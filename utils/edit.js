@@ -10,26 +10,6 @@ async function readJSON(filePath) {
     }
 }
 
-//function to load categories
-async function loadCategories(){
-    try{
-        //fetching Json file containing categories
-        const response = await fetch('./utils/categories.json');
-        const categories = await response.json();
-
-        const dropdown = document.getElementById('categoryDropdown');//dropdown menu in html
-
-        for (let i = 0; i < categories.length; i++) {
-            const option = document.createElement('option');
-            option.value = categories[i].id; // Set option value to category id
-            option.textContent = categories[i].name; // Display category name in dropdown
-            dropdown.appendChild(option);
-        }
-    } catch (error) {
-        console.error('Error loading categories:', error);
-    }
-}
-
 
 //fuction to update tasks
 async function editTask(req,res) {
@@ -110,4 +90,4 @@ async function deleteTask(req, res) {
     }
 }
 
-module.exports={editTask,deleteTask,loadCategories};
+module.exports={editTask,deleteTask};

@@ -47,6 +47,11 @@ function loadTasks(category = "") {
           "<td>" + filteredTasks[i].start_time + "</td>" +
           "<td>" + filteredTasks[i].end_time + "</td>" +
           "<td>" +
+
+          response[i].timestamp +
+          "</td>" +
+          "<td>" +
+
           '<button type="button" class="btn btn-warning" onclick="editTask(\'' +
           JSON.stringify(response[i]).replaceAll('"', "&quot;") + "')\">Edit</button> " +
           '<button type="button" class="btn btn-danger" onclick="deleteTask(' +
