@@ -7,12 +7,18 @@ function loadCategoryDropdown() {
       var categories = JSON.parse(request.responseText);
       var optionsHtml = '';
       // Clear the current options before adding new ones
-      document.getElementById('categoryDropdownBox').innerHTML = '<option value="">All</option>';
+      document.getElementById('categoryDropdownBox').innerHTML = '';
 
-      // Generate <option> elements for each category
-      categories.forEach(category => {
+      // Display a message if no categories are found
+      if (categories.length === 0) {
+          optionsHtml = '<option value="">No categories found</option>';
+      } else {
+        optionsHtml = '<option value="">All</option>';
+        // Generate <option> elements for each category
+        categories.forEach(category => {
           optionsHtml += `<option value="${category.name}">${category.name}</option>`;
-      });
+        });
+      }
 
       // Insert the generated options into the categoryDropdown select element
       document.getElementById('categoryDropdownBox').innerHTML += optionsHtml;
@@ -60,6 +66,10 @@ function loadTasks(category = "") {
           response[i].id + ')"> Delete</button>' +
           "</td>" +
           "</tr>";
+      }
+      // Display a message if no tasks are found
+      if (html === "") {
+        html = "<tr><td colspan='8' class='text-center'>No tasks found</td></tr>";
       }
       document.getElementById("tableContent").innerHTML = html;
     };
