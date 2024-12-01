@@ -68,6 +68,19 @@ function updateTask(id) {
         return;
     }
 
+    //check start time and end time
+    if (start_time==end_time){
+          document.getElementById('editMessage').innerHTML='Start Time and end Time cannot be the same';     
+    }
+    //check for valid start time and end time input
+    if(start_time>end_time){
+        document.getElementById('editMessage').innerHTML='Start time cannot be after the end time'
+    }
+    //check if date chosen is greater/equal to present day
+    if(timestamp<currentDate){
+        document.getElementById('editMessage').innerHTML='Date chosen has passed.'
+    }
+    
     const url = `/tasks/${id}`;
 
     const request = new XMLHttpRequest();
