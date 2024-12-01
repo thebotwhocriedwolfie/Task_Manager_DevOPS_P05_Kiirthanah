@@ -1,13 +1,13 @@
 console.log("editTasks.js loaded");//check
 //function to load categories
-async function loadCategories() {
+async function EditLoadCategories() {
     console.log("Loading categories..."); // Check if loading categories starts
     try {
         // Fetch the JSON file containing categories
         const response = await fetch('categories.json');
         const categories = await response.json();
 
-        const dropdown = document.getElementById('categoryDropdown'); // Dropdown menu in HTML
+        const dropdown = document.getElementById('editCategoryDropdown'); // Dropdown menu in HTML
 
 
         // Dynamically add options from categories JSON
@@ -99,26 +99,29 @@ function updateTask(id) {
 }
 
 
-
-
+    
 //delete task
 function deleteTask(id) {
     var response = "";
-    var request = new XMLHttpRequest();
-    request.open("DELETE", "/tasks/" + id, true);
-    request.setRequestHeader('Content-Type', 'application/json');
-    request.onload = function () {
-    response = JSON.parse(request.responseText);
-    if (response.message == 'Task deleted successfully') {
-    window.location.href = 'index.html';
-    alert(response.message);
+    var confirm = window.confirm("Are you sure you want to delete this product?");
+    
+    // If confirm then proceed with deletion of task
+    if (confirm) {
+        var request = new XMLHttpRequest();
+        request.open("DELETE", "/tasks/" + id, true);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.onload = function () {
+        response = JSON.parse(request.responseText);
+        if (response.message == 'Task deleted successfully') {
+            window.location.href = 'index.html';
+            alert(response.message);
+        }else {
+            alert('Unable to delete task!');
+        }
+        };
+        request.send();   
     }
-    else {
-    alert('Unable to delete task!');
-    }
-    };
-    request.send();
-    }
+}
 
     document.addEventListener('DOMContentLoaded', function () {
         // Find the modal element by its ID
@@ -126,9 +129,6 @@ function deleteTask(id) {
     
         // Add the 'shown.bs.modal' event listener to load categories when the modal opens
         editTaskModal.addEventListener('shown.bs.modal', function () {
-            loadCategories(); // Call the function to load categories
+            EditLoadCategories(); // Call the function to load categories
         });
     });
-    
-
-    
