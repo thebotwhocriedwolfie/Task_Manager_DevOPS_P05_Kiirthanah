@@ -1,36 +1,26 @@
 console.log("editTasks.js loaded");//check
 //function to load categories
-async function loadCategoryDropdown() {
+async function loadCategories() {
+    console.log("Loading categories..."); // Check if loading categories starts
     try {
-        var request = new XMLHttpRequest();
-        request.open('GET', '/view-categories', true);
-        request.setRequestHeader('Content-Type', 'application/json');
-      
-        request.onload = function () {
-            var categories = JSON.parse(request.responseText);
-            var optionsHtml = '';
-            // Clear the current options before adding new ones
-            document.getElementById('editCategoryDropdown').innerHTML = '';
-            // Display a message if no categories are found
-            if (categories.length === 0) {
-                optionsHtml = '<option value="">No categories found</option>';
-            } else {
-                optionsHtml = '<option value="">--Select a Category--</option>';
-                // Generate <option> elements for each category
-                categories.forEach(category => {
-                    optionsHtml += `<option value="${category.name}">${category.name}</option>`;
-                });
-            }
+        // Fetch the JSON file containing categories
+        const response = await fetch('categories.json');
+        const categories = await response.json();
 
-            // Insert the generated options into the categoryDropdown select element
-            document.getElementById('editCategoryDropdown').innerHTML += optionsHtml;
-        };
-        request.send();
+        const dropdown = document.getElementById('categoryDropdown'); // Dropdown menu in HTML
+
+
+        // Dynamically add options from categories JSON
+        for (let i = 0; i < categories.length; i++) {
+            const option = document.createElement('option');
+            option.value = categories[i].name; // Set option value to category name
+            option.textContent = categories[i].name; // Display category name in dropdown
+            dropdown.appendChild(option);
+        }
     } catch (error) {
         console.error('Error loading categories:', error);
     }
 }
-document.addEventListener('DOMContentLoaded', loadCategoryDropdown);
 
 //edit task
 function editTask(data){
@@ -67,20 +57,12 @@ function updateTask(id) {
         document.getElementById('editMessage').setAttribute('class', 'text-danger');
         return;
     }
+    //check for dates and time
+    const currentDate = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+    if (!validateDateTime(jsonData.start_time, jsonData.end_time, jsonData.timestamp, currentDate)) {
+        return; // Stop if validation fails
+    }
 
-    //check start time and end time
-    if (start_time==end_time){
-          document.getElementById('editMessage').innerHTML='Start Time and end Time cannot be the same';     
-    }
-    //check for valid start time and end time input
-    if(start_time>end_time){
-        document.getElementById('editMessage').innerHTML='Start time cannot be after the end time'
-    }
-    //check if date chosen is greater/equal to present day
-    if(timestamp<currentDate){
-        document.getElementById('editMessage').innerHTML='Date chosen has passed.'
-    }
-    
     const url = `/tasks/${id}`;
 
     const request = new XMLHttpRequest();
