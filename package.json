@@ -40,7 +40,13 @@
 
     },
 
-    "keywords": []
+    "keywords": [],
+
+    "devDependencies": {
+
+        "sinon": "^19.0.2"
+
+    }
 
 }
 

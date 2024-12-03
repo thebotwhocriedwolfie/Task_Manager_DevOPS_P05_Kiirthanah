@@ -10,6 +10,15 @@
   },
   {
     "id": "1731270215089046",
+    "name": "Updated Task Name",
+    "description": "Updated description",
+    "category": "Revision",
+    "start_time": "12:00",
+    "end_time": "15:00",
+    "timestamp": "2024-12-3"
+  },
+  {
+    "id": "1731270215089047",
     "name": "DBAV Coding",
     "description": "Complete the coding for the database",
     "category": "Coding",
@@ -19,11 +28,11 @@
   },
   {
     "id": "1733050328674375",
-    "name": "Task",
-    "description": "task",
-    "category": "Revision",
-    "start_time": "05:02",
-    "end_time": "13:58",
-    "timestamp": "2024-12-01"
+    "name": "Task with Missing Fields",
+    "description": "Task with Missing Fields",
+    "category": "Task with Missing Fields",
+    "start_time": "Task with Missing Fields",
+    "end_time": "Task with Missing Fields",
+    "timestamp": "Task with Missing Fields"
   }
 ]
