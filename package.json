@@ -1,36 +1,40 @@
 {
 
-    "name": "project",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js"
-    },
-    "author": "",
-    "license": "ISC",
-  
-    "dependencies": {
-      "express": "^4.17.1",
-      "body-parser": "^1.19.0"
-  },
-  
     "name": "task_manager_devops_p05",
+
     "version": "1.0.0",
+
     "description": "DevOPS Project",
+
     "main": "index.js",
+
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+
+        "test": "echo \"Error: no test specified\" && exit 1"
+
     },
-    "keywords": [],
+
     "author": "",
+
     "license": "ISC",
+
     "dependencies": {
-      "body-parser": "^1.20.3",
-      "cors": "^2.8.5",
-      "express": "^4.21.1",
-      "fs": "^0.0.1-security"
-    }
-  
-  }
+
+        "@cypress/code-coverage": "^3.13.8",
+
+        "body-parser": "^1.20.3",
+
+        "cors": "^2.8.5",
+
+        "cypress": "^13.16.0",
+
+        "express": "^4.21.1",
+
+        "fs": "^0.0.1-security"
+
+    },
+
+    "keywords": []
+
+}
+
