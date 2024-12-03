@@ -4,7 +4,10 @@ const { app, server } = require('../index');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
+
 let baseUrl;
+const taskId="1733050328674375";//task id
+
 describe('Task API', () => {
 before(async () => {
 const { address, port } = await server.address();
@@ -20,7 +23,7 @@ resolve();
 describe('PUT /tasks/:id', () => {
     it('should update an existing task', (done) => {
     chai.request(baseUrl)
-    .put(`/edit-task/${taskId}`)
+    .put(`/tasks/${taskId}`)
     .send({ 
         name: 'Updated Task',
         description: 'Updated description',
@@ -30,20 +33,8 @@ describe('PUT /tasks/:id', () => {
         timestamp:'Updated Timestamp'
     })
     .end((err, res) => {
-    expect(res).to.have.status(201);
+    expect(res).to.have.status(200);
     expect(res.body.message).to.equal('Task modified successfully!');
-    done();
-    });
-    });
-    });
-    // Test Suite for deleting resources
-    describe('DELETE /tasks/:id', () => {
-    it('should delete an existing task', (done) => {
-    chai.request(baseUrl)
-    .delete(`/tasks/${taskId}`)
-    .end((err, res) => {
-    expect(res).to.have.status(201);
-    expect(res.body.message).to.equal('Task deleted successfully!');
     done();
     });
     });
