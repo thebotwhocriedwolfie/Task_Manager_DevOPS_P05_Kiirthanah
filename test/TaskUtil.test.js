@@ -27,10 +27,10 @@ describe('PUT /tasks/:id', () => {
     .send({ 
         name: 'Updated Task',
         description: 'Updated description',
-        category:'Updated Category',
-        start_time:'Updated Start Time',
-        end_time:'Updated End time',
-        timestamp:'Updated Timestamp'
+        category:'Revision',
+        start_time:'10:00',
+        end_time:'12:00',
+        timestamp:'2024-12-10'
     })
     .end((err, res) => {
     expect(res).to.have.status(200);
