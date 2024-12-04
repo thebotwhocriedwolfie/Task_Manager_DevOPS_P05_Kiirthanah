@@ -12,7 +12,7 @@ app.use(express.static("./public"));
 app.use(express.static('utils'));
 
 const { addCategory, viewCategories } = require('./utils/Categories')
-const { editTask, deleteTask } = require('./utils/TaskEdit')
+const { editTask} = require('./utils/TaskEdit')
 const { viewTask } = require('./utils/TaskDisplay')
 const { addTask } = require('./utils/TaskCreate')
 
@@ -21,7 +21,7 @@ app.post('/add-category', addCategory);
 app.get('/view-categories', viewCategories);
 app.post('/add-tasks', addTask);
 app.put('/tasks/:id', editTask);
-app.delete('/tasks/:id', deleteTask);
+//app.delete('/tasks/:id', deleteTask);
 app.get('/view-tasks', viewTask);
 
 
