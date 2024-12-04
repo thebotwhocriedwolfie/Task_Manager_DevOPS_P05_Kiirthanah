@@ -10,7 +10,9 @@
 
     "scripts": {
 
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+
+        "backend-test": "nyc --nycrc-path .nycrc-backend mocha"
 
     },
 
@@ -20,21 +22,31 @@
 
     "dependencies": {
 
-        "@cypress/code-coverage": "^3.13.8",
-
         "body-parser": "^1.20.3",
+
+        "chai": "^4.3.4",
+
+        "chai-http": "^4.3.0",
 
         "cors": "^2.8.5",
 
-        "cypress": "^13.16.0",
-
         "express": "^4.21.1",
 
-        "fs": "^0.0.1-security"
+        "fs": "^0.0.1-security",
+
+        "nyc": "^17.1.0"
 
     },
 
-    "keywords": []
+    "keywords": [],
+
+    "devDependencies": {
+
+        "mocha": "^11.0.1",
+
+        "sinon": "^19.0.2"
+
+    }
 
 }
 

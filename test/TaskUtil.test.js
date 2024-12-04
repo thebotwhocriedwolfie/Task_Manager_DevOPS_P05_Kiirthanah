@@ -1,15 +1,17 @@
-const { describe, it } = require('mocha');
-const { expect } = require('chai');
-const { server } = require('../index'); // Import server for testing
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const fs = require('fs').promises;
+const expect = chai.expect;
+
+const { describe, it } = require('mocha');
+//const { expect } = require('chai');
+const { server } = require('../index'); 
+
+
 chai.use(chaiHttp);
+let baseUrl;
 
-let baseUrl; 
-const existingTaskId = "1733068885969652"; //task id
-
-describe('Task API', () => {
+describe('Edit Task API Tests', () => {
     before((done) => {
         const { address, port } = server.address();
         baseUrl = `http://${address === '::' ? 'localhost' : address}:${port}`;
@@ -19,117 +21,137 @@ describe('Task API', () => {
     after((done) => {
         server.close(() => done());
     });
-    
-    //Update Test
-    describe('PUT /tasks/:id', () => {
-        it('should update an existing task', (done) => {
-            chai.request(baseUrl)
-                .put(`/tasks/${existingTaskId}`)
-                .send({
-                    name: 'Updated Task',
-                    description: 'Updated Description',
-                    category: 'Revision',
-                    start_time: '10:00',
-                    end_time: '12:00',
-                    timestamp: '2024-12-01',
-                })
-                .end((err, res) => {
-                    if (err) return done(err);
-                    expect(res).to.have.status(200);
-                    expect(res.body.message).to.equal('Task modified successfully');
-                    done();
-                });
-        });
+    // Test for successful task modification
+    it('should modify an existing task successfully', async () => {
+        const updateData = {
+            name: 'Updated Name',
+            description: 'Updated description',
+            category: 'Revision',
+            start_time: '12:00',
+            end_time: '15:00',
+            timestamp: '2026-12-10',
+        };
+
+        // Make a request
+        const response = await chai
+            .request(baseUrl)
+            .put('/tasks/1731270215089046') 
+            .send(updateData);
+
+        // Assertions
+        expect(response).to.have.status(200);
+        expect(response.body.message).to.equal('Task modified successfully');
+    });
+
+    // Test for non-existent task
+    it('should return 404 if the task does not exist', async () => {
+        const updatedData = {
+            name: 'Updated Task',
+            description: 'Updated task',
+            category: 'Coding',
+            start_time: '10:00',
+            end_time: '12:00',
+            timestamp: '2026-12-10',
+        };
+
+        const response = await chai
+            .request(baseUrl)
+            .put('/tasks/non-existent-id')
+            .send(updatedData);
+
+        // Assertions
+        expect(response).to.have.status(404);
+        expect(response.body.message).to.equal('Task not found with provided ID');
+    });
+    // test for missing fields
+    it('should return 400 for a missing field', async () => {
+        const missingData = {
+            name: 'Missing Task',
+            description: 'Missing task',
+            category: 'Coding',
+            start_time: '10:00',
+            end_time: '',
+            timestamp: '2026-12-10',
+        };
+
+        const response = await chai
+            .request(baseUrl)
+            .put('/tasks/1733050328674375')
+            .send(missingData);
+
+       
+        expect(response).to.have.status(400);
+        expect(response.body.message).to.equal('Missing required fields');
+    });
+    //test for duplicate name
+    it('should return 400 for duplicate name input', async () => {
+        const duplicateData = {
+            name: 'AMDT Project',
+            description: 'Updated Description',
+            category: 'Coding',
+            start_time: '10:00',
+            end_time: '12:00',
+            timestamp: '2026-12-10',
+        };
+        
+        const response = await chai
+            .request(baseUrl)
+            .put('/tasks/1733050328674377')
+            .send(duplicateData);
+
+        expect(response).to.have.status(400);
+        expect(response.body.message).to.equal('Task name should be unique');
+    });
+
+
+    //test for invalid date and or time input
+    it('should return 400 for a invalid input', async () => {
+        const invalidData = {
+            name: 'Updated Task',
+            description: 'Updated Description',
+            category: 'Coding',
+            start_time: '10:00',
+            end_time: '09:00',
+            timestamp: '2024-01-10',
+        };
+        
+        const response = await chai
+            .request(baseUrl)
+            .put('/tasks/1733050328674375')
+            .send(invalidData);
+
+       
+        expect(response).to.have.status(400);
+        expect(response.body.message).to.equal('Validation failed');
+    });
+
+    // test for unexpected errors
+    it('should return 500 if an unexpected error occurs', async () => {
+        // Simulate error by mocking the file system
+        const originalReadFile = fs.readFile;
+        fs.readFile = () => {
+            throw new Error('Simulated file system error');
+        };
+
+        const updatedData = {
+            name: 'Updated Task',
+            description: 'Updated Description',
+            category: 'Coding',
+            start_time: '10:00',
+            end_time: '12:00',
+            timestamp: '2026-12-10',
+        };
+
+        const response = await chai
+            .request(baseUrl)
+            .put('/tasks/1731270215089046') 
+            .send(updatedData);
+
+        // Assertions
+        expect(response).to.have.status(500);
+        expect(response.body.message).to.include('Unexpected error');
+
+        // Restore original behavior
+        fs.readFile = originalReadFile;
     });
 });
-
-
-/*const { describe, it } = require('mocha');
-const { expect } = require('chai');
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const sinon = require('sinon');
-const fs = require('fs');
-const { server } = require('../index'); // Import server for testing
-
-chai.use(chaiHttp);
-
-let baseUrl;
-const existingTaskId = "1733068838125129"; // Task ID
-const taskFilePath="utils/tasks"//json path
-
-
-
-describe('Task API', () => {
-    let readFileStub, writeFileStub;
-
-    before((done) => {
-        const { address, port } = server.address();
-        baseUrl = `http://${address === '::' ? 'localhost' : address}:${port}`;
-        done();
-    });
-
-    after((done) => {
-        server.close(() => done());
-    });
-
-    beforeEach(() => {
-        // Stub fs.readFile
-        readFileStub = sinon.stub(fs, 'readFile').callsFake((path, encoding, callback) => {
-            if (path === taskFilePath) {
-                const fakeData = JSON.stringify([
-                    { id: "1733068838125129", name: "Task", description: "task" },
-                ]);
-                callback(null, fakeData);
-            } else {
-                callback(new Error('File not found'));
-            }
-        });
-    
-        // Stub fs.writeFile
-        writeFileStub = sinon.stub(fs, 'writeFile').callsFake((path, data, callback) => {
-            if (path === taskFilePath) {
-                callback(null); // Simulate successful write
-            } else {
-                callback(new Error('Write error'));
-            }
-        });
-    });
-
-    afterEach(() => {
-        readFileStub.restore();
-        writeFileStub.restore();
-    });
-
-    describe('PUT /tasks/:id', () => {
-        it('should update an existing task', (done) => {
-            const updatedTask = {
-                name: 'Updated Task',
-                description: 'Updated Description',
-                category: 'Revision',
-                start_time: '10:00',
-                end_time: '12:00',
-                timestamp: '2024-12-01',
-            };
-
-            chai.request(server)
-                .put(`/tasks/${existingTaskId}`)
-                .send(updatedTask)
-                .end((err, res) => {
-                    if (err) return done(err);
-
-                    // Validate the response
-                    expect(res).to.have.status(200);
-                    expect(res.body.message).to.equal('Task modified successfully');
-
-                    // Validate that fs.writeFile was called with the updated task
-                    sinon.assert.calledOnce(writeFileStub);
-                    const writtenData = JSON.parse(writeFileStub.getCall(0).args[1]);
-                    const task = writtenData.find(t => t.id === existingTaskId);
-                    expect(task).to.include(updatedTask);
-
-                    done();
-                });
-        });
-    });
-});*/
