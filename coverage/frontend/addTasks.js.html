@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for TaskDisplay.js</title>
+    <title>Code coverage report for addTasks.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> TaskDisplay.js</h1>
+        <h1><a href="index.html">All files</a> addTasks.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">92.3% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/13</span>
+                <span class='fraction'>12/13</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/13</span>
+                <span class='fraction'>11/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -86,72 +86,60 @@
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const { read } = require('fs');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">console.log("addTasks.js loaded"); // Check if the script loads
 &nbsp;
-const fs = require('fs').promises;
+// Function to load categories
+async function loadCategories() {
+    console.log("Loading categories..."); // Check if loading categories starts
+    try {
+        // Fetch the JSON file containing categories
+        const response = await fetch('categories.json');
+        const categories = await response.json();
 &nbsp;
-// Reads JSON data from file
-async function <span class="fstat-no" title="function not covered" >readJSON(</span>filename) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const data = <span class="cstat-no" title="statement not covered" >await fs.readFile(filename, 'utf8');</span>
-<span class="cstat-no" title="statement not covered" >        return JSON.parse(data);</span>
-    } catch (err) {
-<span class="cstat-no" title="statement not covered" >        console.error(err);</span>
-<span class="cstat-no" title="statement not covered" >        throw err;</span>
-    }
-}
+        const dropdown = document.getElementById('categoryDropdown'); // Dropdown menu in HTML
 &nbsp;
-// Gets all tasks
-async function <span class="fstat-no" title="function not covered" >viewTask(</span>req, res) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const tasks = <span class="cstat-no" title="statement not covered" >await readJSON('./utils/tasks.json');</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(200).json(tasks);</span>
-&nbsp;
+        // Dynamically add options from categories JSON
+        for (let i = 0; i &lt; categories.length; i++) {
+            const option = document.createElement('option');
+            option.value = categories[i].name; // Set option value to category name
+            option.textContent = categories[i].name; // Display category name in dropdown
+            dropdown.appendChild(option);
+        }
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error(error);</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(500).json({ message: error.message });</span>
+<span class="cstat-no" title="statement not covered" >        console.error('Error loading categories:', error);</span>
     }
 }
-&nbsp;
-module.exports = { readJSON, viewTask };</pre></td></tr></table></pre>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-05T07:43:11.549Z
+                at 2024-12-05T08:33:38.813Z
             </div>
         <script src="prettify.js"></script>
         <script>
