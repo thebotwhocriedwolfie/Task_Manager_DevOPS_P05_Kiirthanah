@@ -22,36 +22,6 @@ async function EditLoadCategories() {
         console.error('Error loading categories:', error);
     }
 }
-//date and time check
-function validateDateTime(start_time, end_time, timestamp, currentDate) {
-    let errors = []; // Collect errors
-
-    // Check if start time and end time are the same
-    if (start_time === end_time) {
-        errors.push('Start Time and End Time cannot be the same.');
-    }
-
-    // Check if start time is after end time
-    if (start_time > end_time) {
-        errors.push('Start Time cannot be after the End Time.');
-    }
-
-    // Check if the selected date is in the past
-    if (timestamp < currentDate) {
-        errors.push('The chosen date has already passed.');
-    }
-
-    // Display all errors
-    if (errors.length > 0) {
-        document.getElementById('editMessage').innerHTML = errors.join('<br>'); // Separate errors by line breaks
-        document.getElementById('editMessage').setAttribute('class', 'text-danger');
-        return false; // Prevent further processing
-    }
-
-    // If no errors, clear the message
-    document.getElementById('editMessage').innerHTML = '';
-    return true; // Validation passed
-}
 
 //edit task
 function editTask(data){
@@ -88,11 +58,22 @@ function updateTask(id) {
         document.getElementById('editMessage').setAttribute('class', 'text-danger');
         return;
     }
-    //check for dates and time
-    const currentDate = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
-    if (!validateDateTime(jsonData.start_time, jsonData.end_time, jsonData.timestamp, currentDate)) {
-        return; // Stop if validation fails
+    // Check if start time and end time are the same
+    if (jsonData.start_time === jsonData.end_time) {
+        document.getElementById('editMessage').innerHTML = 'Start Time and End Time cannot be the same.';
+        document.getElementById('editMessage').setAttribute('class', 'text-danger');
+        return;
     }
+
+    // Check if start time is after end time
+    if (jsonData.start_time > jsonData.end_time) {
+        document.getElementById('editMessage').innerHTML = 'Start Time cannot be after the End Time.';
+        document.getElementById('editMessage').setAttribute('class', 'text-danger');
+        return;
+    }
+
+
+    
 
     const url = `/tasks/${id}`;
 
@@ -129,38 +110,3 @@ function updateTask(id) {
 
     request.send(JSON.stringify(jsonData));
 }
-
-
-    
-//delete task
-/*function deleteTask(id) {
-    var response = "";
-    var confirm = window.confirm("Are you sure you want to delete this product?");
-    
-    // If confirm then proceed with deletion of task
-    if (confirm) {
-        var request = new XMLHttpRequest();
-        request.open("DELETE", "/tasks/" + id, true);
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.onload = function () {
-        response = JSON.parse(request.responseText);
-        if (response.message == 'Task deleted successfully') {
-            window.location.href = 'index.html';
-            alert(response.message);
-        }else {
-            alert('Unable to delete task!');
-        }
-        };
-        request.send();   
-    }
-}
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Find the modal element by its ID
-        var editTaskModal = document.getElementById('editTaskModal');
-    
-        // Add the 'shown.bs.modal' event listener to load categories when the modal opens
-        editTaskModal.addEventListener('shown.bs.modal', function () {
-            EditLoadCategories(); // Call the function to load categories
-        });
-    });*/
