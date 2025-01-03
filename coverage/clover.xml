@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1735823082476" clover="3.2.0">
-  <project timestamp="1735823082476" name="All files">
+<coverage generated="1735901677649" clover="3.2.0">
+  <project timestamp="1735901677649" name="All files">
     <metrics statements="163" coveredstatements="96" conditionals="39" coveredconditionals="22" methods="21" coveredmethods="12" elements="223" coveredelements="130" complexity="0" loc="163" ncloc="163" packages="1" files="4" classes="4"/>
     <file name="addTasks.js" path="C:\Users\kiirt\Documents\GitHub\Task_Manager_DevOPS_P05_Kiirthanah\public\js\addTasks.js">
       <metrics statements="12" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
