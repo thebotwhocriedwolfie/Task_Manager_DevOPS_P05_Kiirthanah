@@ -103,11 +103,12 @@ function updateTask(id) {
     request.onload = function() {
         try {
             const response = JSON.parse(request.responseText);
-
             if (response.message === 'Task modified successfully') {
                 document.getElementById("editMessage").innerHTML = 'Edited Resource: ' + jsonData.name + '!';
                 document.getElementById("editMessage").setAttribute("class", "text-success");
-                window.location.href = 'index.html';
+                setTimeout(function() {
+                    window.location.href = 'index.html';
+                }, 1000); // Delay by 1s
                 alert(response.message);
             } else {
                 document.getElementById("editMessage").innerHTML = 'Unable to edit resource!';
@@ -132,7 +133,7 @@ function updateTask(id) {
 
     
 //delete task
-function deleteTask(id) {
+/*function deleteTask(id) {
     var response = "";
     var confirm = window.confirm("Are you sure you want to delete this product?");
     
@@ -162,4 +163,4 @@ function deleteTask(id) {
         editTaskModal.addEventListener('shown.bs.modal', function () {
             EditLoadCategories(); // Call the function to load categories
         });
-    });
+    });*/
