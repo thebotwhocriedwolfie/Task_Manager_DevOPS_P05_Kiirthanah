@@ -22,36 +22,6 @@ async function EditLoadCategories() {
         console.error('Error loading categories:', error);
     }
 }
-//date and time check
-function validateDateTime(start_time, end_time, timestamp, currentDate) {
-    let errors = []; // Collect errors
-
-    // Check if start time and end time are the same
-    if (start_time === end_time) {
-        errors.push('Start Time and End Time cannot be the same.');
-    }
-
-    // Check if start time is after end time
-    if (start_time > end_time) {
-        errors.push('Start Time cannot be after the End Time.');
-    }
-
-    // Check if the selected date is in the past
-    if (timestamp < currentDate) {
-        errors.push('The chosen date has already passed.');
-    }
-
-    // Display all errors
-    if (errors.length > 0) {
-        document.getElementById('editMessage').innerHTML = errors.join('<br>'); // Separate errors by line breaks
-        document.getElementById('editMessage').setAttribute('class', 'text-danger');
-        return false; // Prevent further processing
-    }
-
-    // If no errors, clear the message
-    document.getElementById('editMessage').innerHTML = '';
-    return true; // Validation passed
-}
 
 //edit task
 function editTask(data){
