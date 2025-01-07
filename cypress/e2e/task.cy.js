@@ -153,4 +153,24 @@ describe('Task Manager Frontend', () => {
     cy.get('#updateButton').click();
     cy.get('#editMessage').should('contain', 'Start Time and End Time cannot be the same.');
   });
+
+  it('should display error when unable to edit task', () => {
+    // Simulate clicking the edit button
+    cy.get('button.btn-warning').filter(':contains("Edit")').last().click();
+  
+    // Stub the network request to return invalid JSON
+    cy.intercept('PUT', '/edit', {
+      statusCode: 200,
+      body: 'invalid_json', // Simulate an invalid response format
+    });
+  
+    // Click the update button
+    cy.get('#updateButton').click();
+  
+    // Verify the error message is displayed
+    cy.get('#editMessage')
+      .should('contain', 'Unable to edit task!')
+      .and('have.class', 'text-danger');
+  });
+  
 });

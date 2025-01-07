@@ -19,7 +19,7 @@ async function EditLoadCategories() {
             dropdown.appendChild(option);
         }
     } catch (error) {
-        console.error('Error loading categories:', error);
+        console.error('Error loading categories:', error);//test
     }
 }
 
@@ -85,19 +85,19 @@ function updateTask(id) {
         try {
             const response = JSON.parse(request.responseText);
             if (response.message === 'Task modified successfully') {
-                document.getElementById("editMessage").innerHTML = 'Edited Resource: ' + jsonData.name + '!';
+                document.getElementById("editMessage").innerHTML = 'Edited Resource: ' + jsonData.name + '!';//test-
                 document.getElementById("editMessage").setAttribute("class", "text-success");
                 setTimeout(function() {
                     window.location.href = 'index.html';
                 }, 1000); // Delay by 1s
-                alert(response.message);
+                alert(response.message);//-test
             } else {
-                document.getElementById("editMessage").innerHTML = 'Unable to edit resource!';
+                document.getElementById("editMessage").innerHTML = 'Unable to edit task!';
                 document.getElementById("editMessage").setAttribute("class", "text-danger");
             }
         } catch (error) {
-            console.error("Error parsing response:", error);
-            document.getElementById("editMessage").innerHTML = 'Invalid response format!';
+            console.error("Error parsing response:", error);//test-
+            document.getElementById("editMessage").innerHTML = 'Invalid response format!';//-test
             document.getElementById("editMessage").setAttribute("class", "text-danger");
         }
     };
