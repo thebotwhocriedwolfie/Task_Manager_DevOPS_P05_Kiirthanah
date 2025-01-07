@@ -4,7 +4,7 @@
     "html"
     ],
     "include": [
-    "utils/*.js"
+    "utils/TaskEdit.js"
     ],
     "reportDir": "coverage/backend",
     "check-coverage": true,
@@ -17,4 +17,5 @@
       "./utils/TaskCreate.js",
       "./utils/TaskDisplay.js"
     ]
+
     }
