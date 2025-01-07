@@ -13,8 +13,8 @@
     "functions": 80,
     "statements": 80,
     "exclude": [
-      "Categories.js",
-      "TaskCreate.js",
-      "TaskDisplay.js"
-      ]
+      "./utils/Categories.js",
+      "./utils/TaskCreate.js",
+      "./utils/TaskDisplay.js"
+    ]
     }
