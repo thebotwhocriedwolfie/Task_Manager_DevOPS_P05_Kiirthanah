@@ -1,0 +1,10 @@
+services:
+  build-rms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: thebotwhocriedwolfie/task_manager_devops_p05_kiirthanah-docker-img:latest
+    container_name: docker-container1
+    ports:
+      - "8000:5050"
+
