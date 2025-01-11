@@ -68,7 +68,7 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no user@<server-ip> 'bash -s' << 'EOF'
+          ssh -o StrictHostKeyChecking=no user@64.236.59.59 'bash -s' << 'EOF'
           # Navigate to the project directory
           cd /home/kiirt/Documents/GitHub/Task_Manager_DevOPS_P05_Kiirthanah || exit 1
         
