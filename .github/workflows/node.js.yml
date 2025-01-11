@@ -51,3 +51,32 @@ jobs:
 
     - name: Push Docker image to Docker Hub
       run: docker push thebotwhocriedwolfie/task_manager_devops_p05_kiirthanah-docker-img:latest
+    
+  deploy:
+  runs-on: ubuntu-latest
+
+  steps:
+    # Checkout the code
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Set up SSH agent and configure SSH key
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    # Deploy to the server
+    - name: Deploy to Server
+      run: |
+        ssh -o StrictHostKeyChecking=no user@<server-ip> << 'EOF'
+          # Update authorized keys (optional, usually done manually beforehand)
+          echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCQAHyraY6x7jryyl5++gVLlYVXwR406WTb9UIWiVB66lxZDhThz7MN/bLTcjBPHnOfoZbvu10vKV8O6oi5rA0ZtQlqu91d4fqCopcbcu+rUZs+LF5QO0DWY9476+t6yLuwxaHEJVd6nOBs2CZ+0fCox2IQwArHOzdiqjz8Gat+9BSC/lmZ/prl3wDmF+BiiKpnKHUYQTEbKPBC/YwOfmevNzWXXzvAvgPg2AbC6BIONFWTwYDsIzti6XzQQbR5kjBdZr6XVvI8Rx0G0CIwmg5BVeVf+jDS09fTajLa0vFX/lZ6QX1A+Q18L5sipitvkryggf5jhMQCHqzVv/2O89ih" >> ~/.ssh/authorized_keys
+
+          # Pull the latest code
+          C:\Users\kiirt\Documents\GitHub\Task_Manager_DevOPS_P05_Kiirthanah
+          git pull origin main
+
+          # Deploy with Docker Compose
+          docker-compose up --build -d
+        EOF
