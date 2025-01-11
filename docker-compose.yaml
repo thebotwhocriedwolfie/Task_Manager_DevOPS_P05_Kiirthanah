@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: thebotwhocriedwolfie/task_manager_devops_p05_kiirthanah-docker-img:latest
+    image: thebotwhocriedwolfie/task_manager_devops_p05_kiirthanah-docker-img:v2
     container_name: docker-container1
     ports:
       - "8000:5050"
