@@ -74,10 +74,6 @@ jobs:
         
           # Pull the latest code
           git pull origin main || exit 1
-        
-          # Deploy with Docker Compose
-          docker-compose up --build -d || exit 1
-          EOF
 
           # Deploy with Docker Compose
           docker-compose up --build -d
