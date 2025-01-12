@@ -60,21 +60,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Set up SSH agent and configure SSH key
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.7.0
+      # Log in to Azure
+      - name: Azure Login
+        uses: azure/login@v1
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Server
+      # Set up kubectl to use your AKS cluster
+      - name: Set up AKS
         run: |
-          ssh -o StrictHostKeyChecking=no user@64.236.59.59 'bash -s' << 'EOF'
-          # Navigate to the project directory
-          cd /home/kiirt/Documents/GitHub/Task_Manager_DevOPS_P05_Kiirthanah || exit 1
-        
-          # Pull the latest code
-          git pull origin main || exit 1
+          az aks get-credentials --resource-group rmsResourceGroup --name rmsAKSCluster --overwrite-existing
 
-          # Deploy with Docker Compose
-          docker-compose up --build -d
-          EOF
+      # Deploy to AKS
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f rms-deployment.yaml
+          kubectl apply -f rms-service.yaml
