@@ -51,3 +51,28 @@ jobs:
 
     - name: Push Docker image to Docker Hub
       run: docker push thebotwhocriedwolfie/task_manager_devops_p05_kiirthanah-docker-img:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Log in to Azure
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Set up kubectl to use your AKS cluster
+      - name: Set up AKS
+        run: |
+          az aks get-credentials --resource-group rmsResourceGroup --name rmsAKSCluster --overwrite-existing
+
+      # Deploy to AKS
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f rms-deployment.yaml
+          kubectl apply -f rms-service.yaml
