@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
+const logger = require('./logger');
 
 const PORT = process.env.PORT || 5050;
 var startPage = "index.html";
@@ -15,6 +16,9 @@ const { addCategory, viewCategories } = require('./utils/Categories')
 const { editTask} = require('./utils/TaskEdit')
 const { viewTask } = require('./utils/TaskDisplay')
 const { addTask } = require('./utils/TaskCreate')
+
+const statusMonitor = require('express-status-monitor');
+app.use(statusMonitor());
 
 //API routes
 app.post('/add-category', addCategory);
@@ -34,5 +38,7 @@ server = app.listen(PORT, function () {
     const address = server.address();
     const baseUrl = `http://${address.address == "::" ? 'localhost' : address.address}:${address.port}`;
     console.log(`Demo project at: ${baseUrl}`);
+    logger.info(`Demo project at: ${baseUrl}!`);
+    logger.error(`Example or error log`)
 });
 module.exports = { app, server };
